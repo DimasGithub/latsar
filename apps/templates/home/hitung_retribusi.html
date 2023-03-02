@@ -1,0 +1,188 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+{% block title %} Hitung Retibusi - Dinas Perhubungan Kab. Purbalingga{% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/fontawesome-free/css/all.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/daterangepicker/daterangepicker.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/css/adminlte.min.css">
+
+
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/daterangepicker/daterangepicker.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ ASSETS_ROOT }}/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}    
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Hitung Retribusi</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">hitung Retribusi</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Kalkulasi Retribusi</h3>
+              </div>
+              <form method='POST' enctype="multipart/form-data">
+              {% csrf_token %}
+              
+                <div class="card-body">
+                <div class="form-group">
+                  <label for="vehicles">Jenis Kendaraan *</label>
+                    <select id="vehicles" class="form-control" name="vehicle_price">
+                    <option value="">------------</option>
+                    {% for vehicle in category_vehicles %}
+                      <option value="{{vehicle.id}}"{% if vehicle.name == results.name%}selected{%endif%}>{{vehicle.name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label>Terakhir Uji Kendaraan *</label>
+                    <div class="input-group date" id="date_vehicle_test" data-target-input="nearest">
+                        <input type="text" value="{{results.date_vehicle_test}}" name="date_vehicle_test" class="form-control datetimepicker-input" data-target="#date_vehicle_test"/>
+                        <div class="input-group-append" data-target="#date_vehicle_test" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+                 {% if results%}
+                <div class="form-group">
+                <div class="col-md-12">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>Jenis Kendaraan</th>
+                      <th>Tarif Retribusi (Rp.)</th>
+                      <th>Total Keterlambatan (Bulan)</th>
+                      <th>Total Retribusi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>{{results.name}}</td>
+                      <td>Rp. {{results.price|intcomma}}</td>
+                      <td>{{results.diff_month}} Bulan</td>
+                      <td><b>Rp. {{results.total_retribution_price|intcomma}}<b></td>
+                    </tr>
+                    <tbody>
+                  </table>
+                </div>
+                </div>
+                {% endif %}
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Hitung</button>
+                </div>
+
+              </form>
+               
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="{{ ASSETS_ROOT }}/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{ ASSETS_ROOT }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Select2 -->
+  <script src="{{ ASSETS_ROOT }}/plugins/select2/js/select2.full.min.js"></script>
+  <!-- Bootstrap4 Duallistbox -->
+  <script src="{{ ASSETS_ROOT }}/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+  <!-- InputMask -->
+  <script src="{{ ASSETS_ROOT }}/plugins/moment/moment.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/plugins/inputmask/jquery.inputmask.min.js"></script>
+  <!-- date-range-picker -->
+  <script src="{{ ASSETS_ROOT }}/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- bootstrap color picker -->
+  <script src="{{ ASSETS_ROOT }}/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="{{ ASSETS_ROOT }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Bootstrap Switch -->
+  <script src="{{ ASSETS_ROOT }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="{{ ASSETS_ROOT }}/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{ ASSETS_ROOT }}/js/demo.js"></script>
+
+
+
+  <script src="{{ ASSETS_ROOT }}/plugins/daterangepicker/daterangepicker.js"></script>
+
+  <!-- jQuery -->
+  <script src="{{ ASSETS_ROOT }}/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{ ASSETS_ROOT }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- bs-custom-file-input -->
+  <script src="{{ ASSETS_ROOT }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="{{ ASSETS_ROOT }}/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{ ASSETS_ROOT }}/js/demo.js"></script>
+  <script>
+  $(function () {
+    bsCustomFileInput.init();
+  });
+  
+  </script>
+  <script>
+  </script>
+  <script>
+    $(function () {  
+      $('#date_vehicle_test').datepicker({
+        format: 'dd/mm/yyyy' 
+      });
+    })
+  </script>
+
+{% endblock javascripts %}
