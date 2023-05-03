@@ -96,16 +96,16 @@
                     <thead>
                     <tr>
                       <th>Jenis Kendaraan</th>
-                      <th>Tarif Retribusi (Rp.)</th>
-                      <th>Total Keterlambatan (Bulan)</th>
-                      <th>Total Retribusi</th>
+                      {% if not results.mutation %}<th>Tarif Retribusi (Rp.)</th>{% endif %}
+                      {% if not results.mutation %}<th>Total Keterlambatan (Bulan)</th>{% endif %}
+                      <th>{% if not results.mutation %}Total Retribusi{% else %} Biaya Mutasi{% endif %}</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                       <td>{{results.name}}</td>
-                      <td>Rp. {{results.price|intcomma}}</td>
-                      <td>{{results.diff_month}} Bulan</td>
+                      {% if not results.mutation %}<td>Rp. {{results.price|intcomma}}</td>{% endif %}
+                      {% if not results.mutation %}<td>{{results.diff_month}} Bulan</td>{% endif %}
                       <td><b>Rp. {{results.total_retribution_price|intcomma}}<b></td>
                     </tr>
                     <tbody>
