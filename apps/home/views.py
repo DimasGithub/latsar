@@ -41,13 +41,17 @@ class RetributionCalulationViewSet(View):
             price_vehicle = request.POST['vehicle_price']
             date_input_str = request.POST['date_vehicle_test']
             vehicle = Vehicle.objects.get(id=price_vehicle)
+            mutation=False
+            if vehicle.name == 'Mutasi': mutation=True
             # Get the current date
             now = datetime.date.today()           
             date_input = datetime.datetime.strptime(date_input_str, "%m/%d/%Y %I:%M %p").date()
             diff_months = (now.year - date_input.year) * 12 + (now.month - date_input.month)
             total_percentage = 0.02 * int(vehicle.price)
-            total_retribution_price = diff_months * total_percentage
+            total_retribution_price = (diff_months * total_percentage) + int(vehicle.price)
+            if mutation: total_retribution_price = int(vehicle.price)
             results = {
+                'mutation':mutation,
                 'name': vehicle.name,
                 'date_vehicle_test':date_input_str,
                 'price': vehicle.price,
