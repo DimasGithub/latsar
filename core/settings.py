@@ -160,10 +160,10 @@ CELERY_ENABLE_UTC = False
 
 #MESSAGE BROKER CONFIG RABBITMQ
 
-BROKER_USERNAME = env('BROKER_USERNAME')
-BROKER_PASSWORD = env('BROKER_PASSWORD')
-BROKER_HOST = env('BROKER_HOST')
-BROKER_VHOST = env('BROKER_VHOST')
+# BROKER_USERNAME = env('BROKER_USERNAME')
+# BROKER_PASSWORD = env('BROKER_PASSWORD')
+# BROKER_HOST = env('BROKER_HOST')
+# BROKER_VHOST = env('BROKER_VHOST')
 
 #############################################################
 #############################################################
