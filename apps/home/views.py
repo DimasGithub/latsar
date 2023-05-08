@@ -17,24 +17,16 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
+from django.views.generic import (TemplateView, DetailView)
 
 from .models import Vehicle
 
-
-# def index(request):
-#     context = {'segment': 'index'}
-
-#     html_template = loader.get_template('home/hitung_retribusi.html')
-#     return HttpResponse(html_template.render(context, request))
-
-class RetributionCalulationViewSet(View):
-    context = {'segment': 'hitung-retribusi',
-               'category_vehicles': Vehicle.objects.all()
-               }
-    html_template = loader.get_template('home/hitung_retribusi.html')
-
+class RetributionCalulationViewSet(TemplateView):
     def get(self, request):
-        return HttpResponse(self.html_template.render(self.context, request))
+        context = {'segment': 'hitung-retribusi',
+            'category_vehicles': Vehicle.objects.all()
+            }
+        return render(request, 'home/hitung_retribusi.html', context)
 
     def post(self, request):
         try:
