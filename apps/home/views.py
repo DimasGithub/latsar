@@ -26,9 +26,12 @@ class RetributionCalulationViewSet(TemplateView):
         context = {'segment': 'hitung-retribusi',
             'category_vehicles': Vehicle.objects.all()
             }
-        return render(request, 'home/hitung_retribusi.html', context)
+        return render(request, 'home/hitung_retribusi.html', context=context)
 
     def post(self, request):
+        context = {'segment': 'hitung-retribusi',
+            'category_vehicles': Vehicle.objects.all()
+            }
         try:
             price_vehicle = request.POST['vehicle_price']
             date_input_str = request.POST['date_vehicle_test']
@@ -50,8 +53,8 @@ class RetributionCalulationViewSet(TemplateView):
                 'diff_month': diff_months,
                 'total_retribution_price':total_retribution_price
             }
-            self.context.update({'results': results})
-            return render(request,'home/hitung_retribusi.html', context=self.context)
+            context.update({'results': results})
+            return render(request,'home/hitung_retribusi.html', context=context)
         
         except Vehicle.DoesNotExist:
             messages.warning(request, f"Tipe kendaraan tidak tersedia.")
