@@ -40,7 +40,7 @@ class RetributionCalulationViewSet(TemplateView):
             if vehicle.active_cash_fine: is_cash_fine=True
             # Get the current date
             now = datetime.date.today()           
-            date_input = datetime.datetime.strptime(date_input_str, "%m/%d/%Y %I:%M %p").date()
+            date_input = datetime.datetime.strptime(date_input_str, "%d/%m/%Y").date()
             diff_months = (now.year - date_input.year) * 12 + (now.month - date_input.month)
             total_percentage = 0.02 * int(vehicle.price)
             total_retribution_price = (diff_months * total_percentage) + int(vehicle.price)
