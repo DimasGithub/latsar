@@ -84,7 +84,7 @@
                 <div class="form-group">
                   <label>Terakhir Uji Kendaraan *</label>
                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input type="text" value="{{results.date_vehicle_test}}" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                        <input type="text" value="{{results.date_vehicle_test}}" name="date_vehicle_test" class="form-control datetimepicker-input" data-target="#reservationdate"/>
                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -179,7 +179,7 @@
 
       //Date range picker
       $('#reservationdate').datetimepicker({
-          format: 'dd/mm/yyyy'
+          format: 'MM/DD/YYYY hh:mm A'
       });
       //Date range picker
       $('#reservation').daterangepicker()
